@@ -1,0 +1,37 @@
+CC9=riscv-none-elf-gcc
+CC=9c
+AS=riscv-none-elf-as
+LD=riscv-none-elf-ld
+
+CFLAGS=-c -march\=rv64i -mabi\=lp64 -Wall -Wextra -ffreestanding -O0 -mcmodel\=medany
+LDFLAGS=-melf64lriscv -T linker.ld  -nostdlib
+AFLAGS=-c -march\=rv64i -mabi\=lp64 
+
+OBJ=\
+	l.o\
+	main.o\
+	devuart.o
+
+kernel: $OBJ
+	$LD $LDFLAGS $OBJ -o kernel
+
+%.o: %.s
+	$AS $AFLAGS  $stem.s -o $stem.o
+
+%.o: %.c
+	$CC $CFLAGS $stem.c -o $stem.o
+
+clean:V:
+	rm $OBJ kernel
+
+run:Q: kernel
+	qemu-system-riscv64 -machine virt -bios none -kernel kernel -nographic
+
+debug:Q: kernel
+	qemu-system-riscv64 -machine virt -bios none -kernel kernel -nographic -gdb tcp::1234 -S
+
+rungui: kernel
+	qemu-system-riscv64 -machine virt -bios none -kernel kernel
+
+debuggui: kernel
+	qemu-system-riscv64 -machine virt -bios none -kernel kernel -gdb tcp::1234 -S

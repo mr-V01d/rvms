@@ -1,0 +1,2 @@
+#define KZERO 0x80000000
+#define UARTADDR 0x10000000 
