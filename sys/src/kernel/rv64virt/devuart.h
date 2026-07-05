@@ -1,4 +1,5 @@
-void inituart(uint8_t*);
+uint8_t inituart(uint8_t*);
 void uartprint(uint8_t*, char*);
-#define UARTPUTC(addr, c)(*addr=(char)c)
-#define UARTGETC(addr)((char)*addr)
+void uartprintf(uint8_t*, char*, ...);
+#define UARTPUTC(addr, c)(*(char*)addr =c)
+#define UARTGETC(addr)(*(char*)addr)

@@ -1,16 +1,22 @@
+<../../env.rc
+objtype=rv64
+
 CC9=riscv-none-elf-gcc
 CC=9c
 AS=riscv-none-elf-as
 LD=riscv-none-elf-ld
 
-CFLAGS=-c -march\=rv64i -mabi\=lp64 -Wall -Wextra -ffreestanding -O0 -mcmodel\=medany
+CFLAGS=-c -march\=rv64im -mabi\=lp64 -Wall -Wextra -ffreestanding -O0 -mcmodel\=medany
 LDFLAGS=-melf64lriscv -T linker.ld  -nostdlib
-AFLAGS=-c -march\=rv64i -mabi\=lp64 
+AFLAGS=-c -march\=rv64im -mabi\=lp64
 
 OBJ=\
 	l.o\
 	main.o\
 	devuart.o
+
+LIB=\
+	
 
 kernel: $OBJ
 	$LD $LDFLAGS $OBJ -o kernel

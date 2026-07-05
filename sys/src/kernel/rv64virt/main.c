@@ -9,14 +9,10 @@ main(void)
 {
 	inituart((uint8_t*)UARTADDR);
 	uartprint((uint8_t*)UARTADDR, "KERNEL ONLINE\n\r");
-	char c;
-	for(;;){
-		c = UARTGETC((uint8_t*)UARTADDR);
-		if(c == '\r') {
-			UARTPUTC((uint8_t*)UARTADDR, '\n');
-			UARTPUTC((uint8_t*)UARTADDR, '\r');
-		} else {
-			UARTPUTC((uint8_t*)UARTADDR, c);
-		}
+	uartprint((uint8_t*)UARTADDR, "Formated print test\n\r");
+	for (uint8_t i = 0; i < 255; i++) {
+		uartprintf((uint8_t*)UARTADDR, "DEC: %d\tHEX: %x\n\r", i, i);
 	}
+	for (;;)
+		;
 }
